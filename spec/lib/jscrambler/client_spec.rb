@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe JScrambler::Client do
+
   describe '#initialize' do
 
     context 'when calling constructor without a json config' do
