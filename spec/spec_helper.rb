@@ -21,4 +21,8 @@ RSpec.configure do |config|
   # the seed, which is printed after each run.
   #     --seed 1234
   config.order = 'random'
+
+  config.before(:each) do
+    stub_const('JScrambler::CONFIG_FILE', 'spec/fixtures/config.json')
+  end
 end

@@ -10,6 +10,9 @@ module JScrambler
     def setup(json_config=nil)
       begin
         @config = JSON.parse(json_config || File.open(CONFIG_FILE, 'rb').read)
+        if @config['keys']['accessKey'].empty? || @config['keys']['secretKey'].empty?
+          raise JScrambler::MissingKeys, 'Missing Access Key or Secret Key'
+        end
       rescue JSON::ParserError
         @config = JSON.parse(File.open(CONFIG_FILE, 'rb').read)
       end

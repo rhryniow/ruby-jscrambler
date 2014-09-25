@@ -10,7 +10,7 @@ describe JScrambler::Client do
     end
 
     context 'when calling constructor with a custom json config' do
-      let(:json_config) { '{"elfen":"lied"}' }
+      let(:json_config) { '{"keys":{"accessKey": "1234","secretKey": "1234"}}' }
 
       subject { described_class.new(json_config) }
 
@@ -24,6 +24,16 @@ describe JScrambler::Client do
 
       it 'should fallback to config file' do
         expect(subject.config).to be_a Hash
+      end
+    end
+
+    context 'when API details are not provided' do
+      let(:json_config) { '{"keys":{"accessKey": "","secretKey": ""}}' }
+
+      subject { described_class.new(json_config) }
+
+      it 'should raise an error' do
+        expect{subject.config}.to raise_error(JScrambler::MissingKeys)
       end
     end
   end

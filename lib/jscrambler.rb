@@ -1,5 +1,6 @@
 require 'json'
 require 'jscrambler/client'
+require 'jscrambler/errors'
 
 module JScrambler
 
