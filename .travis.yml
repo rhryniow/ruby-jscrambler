@@ -10,9 +10,3 @@ rvm:
   - jruby-19mode
   - rbx-2
   - ree
-- 'echo ''gem: --no-ri --no-rdoc'' > ~/.gemrc'
-- gem install bundler bundle_cache
-- bundle_cache_install
-env:
-  global:
-  - RAILS_ENV=test
