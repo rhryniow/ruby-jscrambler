@@ -5,6 +5,7 @@ PATH
       faraday
       json
       rake
+      rspec
 
 GEM
   remote: http://rubygems.org/
@@ -35,4 +36,3 @@ PLATFORMS
 DEPENDENCIES
   byebug
   jscrambler!
-  rspec
