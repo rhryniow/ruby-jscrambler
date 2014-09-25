@@ -1,0 +1,3 @@
+module JScrambler
+
+end
