@@ -1,4 +1,3 @@
-ruby-jscrambler
-===============
+### JScrambler client for Ruby.
 
-JScrambler Client for Ruby
+Soon...
