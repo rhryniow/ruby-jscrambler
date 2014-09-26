@@ -38,5 +38,17 @@ describe JScrambler::Archiver do
         expect(File.exists?(File.join(to_path, File.basename(file)))).to be true
       end
     end
+
+    it 'should raise an error when destination path is empty' do
+      expect{instance.unzip('')}.to raise_error(JScrambler::InvalidPath)
+    end
+
+    it 'should raise an error when destination path is nil' do
+      expect{instance.unzip(nil)}.to raise_error(JScrambler::InvalidPath)
+    end
+
+    it 'should raise an error when destination path is invalid' do
+      expect{instance.unzip('/tmp/helloadasdasd')}.to raise_error(JScrambler::InvalidPath)
+    end
   end
 end

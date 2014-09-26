@@ -20,6 +20,7 @@ module JScrambler
     end
 
     def unzip(to_path)
+      raise JScrambler::InvalidPath, 'When unzipping a file a destination path is required' unless File.directory?(to_path.to_s)
       files = []
       Zip::File.open(zipfile.path) do |zip_file|
         zip_file.each do |entry|
