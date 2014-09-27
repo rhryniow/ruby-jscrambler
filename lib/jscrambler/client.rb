@@ -8,14 +8,7 @@ module JScrambler
     end
 
     def setup(json_config=nil)
-      begin
-        @config = JSON.parse(json_config || File.open(CONFIG_FILE, 'rb').read)
-        if config['keys']['accessKey'].empty? || config['keys']['secretKey'].empty?
-          raise JScrambler::MissingKeys, 'Missing Access Key or Secret Key'
-        end
-      rescue JSON::ParserError
-        @config = JSON.parse(File.open(CONFIG_FILE, 'rb').read)
-      end
+      @config = JScrambler::Config.new(json_config).to_hash
     end
 
     def zip_files
@@ -24,6 +17,18 @@ module JScrambler
 
     def upload_to_jscrambler
 
+    end
+
+    private
+
+    def api
+      @api ||= Faraday.new(:url => 'https://sushi.com') do |builder|
+        builder.use       JScrambler::Middleware::HmacSignature
+        builder.request   :multipart
+        builder.request   :url_encoded
+        builder.response  :logger
+        builder.adapter   Faraday.default_adapter
+      end
     end
   end
 end

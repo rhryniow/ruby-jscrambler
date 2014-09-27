@@ -1,16 +1,31 @@
 require 'json'
 require 'zip'
+require 'openssl'
+require 'base64'
+require 'faraday'
+require 'jscrambler/config'
 require 'jscrambler/client'
 require 'jscrambler/errors'
 require 'jscrambler/archiver'
+require 'jscrambler/middleware/hmac_signature'
 
 module JScrambler
-
-  CONFIG_FILE = 'config/config.json'
 
   class << self
     def upload_code(json_config=nil)
       JScrambler::Client.new(json_config)
+    end
+
+    def poll_project
+
+    end
+
+    def download_code
+
+    end
+
+    def get_info
+
     end
   end
 end
