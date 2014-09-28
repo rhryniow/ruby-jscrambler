@@ -7,6 +7,7 @@ module JScrambler
       end
 
       def call(env)
+        require 'byebug'; byebug
         env.body[:signature] = hmac_params_signature(env)
         @app.call(env)
       end
@@ -23,19 +24,19 @@ module JScrambler
         data = []
         data << env.method.to_s.upcase
         data << @config['host'].to_s.downcase
-        data << env.url.to_s
+        data << '/' + File.basename(env.url.to_s)
         data << generate_query_string(env)
         data.join(';')
       end
 
       def generate_query_string(env)
         params_copy = env.body.clone
+        params_copy = add_file_params(params_copy) if [:post, :put].include? env.method
         params_copy = sort_parameters(params_copy)
 
         if [:get, :delete].include? env.method
           URI.encode_www_form(params_copy)
         else
-          params_copy = add_file_params(params_copy)
           URI.encode(params_copy.map{|k,v| "#{k}=#{v}"}.join('&'))
         end
       end
