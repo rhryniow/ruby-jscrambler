@@ -15,7 +15,7 @@ module JScrambler
 
   class << self
     def upload_code(json_config=nil)
-      JScrambler::Client.new(json_config)
+      JScrambler::Client.new(json_config).upload_to_jscrambler
     end
 
     def poll_project
