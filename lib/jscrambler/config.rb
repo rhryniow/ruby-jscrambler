@@ -1,7 +1,7 @@
 module JScrambler
   class Config
 
-    DEFAULT_CONFIG_FILE = 'config/config.json'
+    DEFAULT_CONFIG_FILE = 'config/jscrambler_config.json'
 
     def initialize(json_config=nil)
       begin
