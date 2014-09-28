@@ -11,6 +11,6 @@ RSpec.configure do |config|
   config.order      = 'random'
 
   config.before(:each) do
-    stub_const('JScrambler::Config::DEFAULT_CONFIG_FILE', 'spec/fixtures/config.json')
+    stub_const('JScrambler::Config::DEFAULT_CONFIG_FILE', 'spec/fixtures/jscrambler_config.json')
   end
 end
