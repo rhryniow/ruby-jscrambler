@@ -3,10 +3,12 @@ require 'zip'
 require 'openssl'
 require 'base64'
 require 'faraday'
+require 'time'
 require 'jscrambler/config'
 require 'jscrambler/client'
 require 'jscrambler/errors'
 require 'jscrambler/archiver'
+require 'jscrambler/middleware/default_params'
 require 'jscrambler/middleware/hmac_signature'
 
 module JScrambler
