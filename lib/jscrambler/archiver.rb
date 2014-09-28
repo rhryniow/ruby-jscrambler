@@ -14,9 +14,8 @@ module JScrambler
           filename = File.basename(file)
           zipfile.add(filename, file)
         end
-        # zipfile.get_output_stream("myFile") { |os| os.write "myFile contains just this" }
       end
-      zipfile.path
+      zipfile
     end
 
     def unzip(to_path)
