@@ -7,16 +7,14 @@ module JScrambler
       end
 
       def call(env)
-        if [:post, :put].include? env.method
-          env.body[:signature] = hmac_params_signature(env)
-        end
+        env.body[:signature] = hmac_params_signature(env)
         @app.call(env)
       end
 
       private
 
       def hmac_params_signature(env)
-        key = @config['keys']['secretKey']
+        key = @config['keys']['secretKey'].to_s.upcase
         data = generate_data(env)
         Base64.encode64(OpenSSL::HMAC.digest(OpenSSL::Digest.new('sha256'), key, data)).strip
       end
@@ -33,8 +31,13 @@ module JScrambler
       def generate_query_string(env)
         params_copy = env.body.clone
         params_copy = sort_parameters(params_copy)
-        params_copy = add_file_params(params_copy)
-        URI.encode(params_copy.map{|k,v| "#{k}=#{v}"}.join('&'))
+
+        if [:get, :delete].include? env.method
+          URI.encode_www_form(params_copy)
+        else
+          params_copy = add_file_params(params_copy)
+          URI.encode(params_copy.map{|k,v| "#{k}=#{v}"}.join('&'))
+        end
       end
 
       def sort_parameters(params)
