@@ -25,6 +25,7 @@ module JScrambler
         data = []
         data << env.method.to_s.upcase
         data << @config['host'].to_s.downcase
+        data << env.url.to_s.gsub(/http.+v\d/, '')
         data << generate_query_string(env)
         data.join(';')
       end
