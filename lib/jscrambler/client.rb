@@ -11,18 +11,29 @@ module JScrambler
       @config = JScrambler::Config.new(json_config).to_hash
     end
 
-    def upload_to_jscrambler
+    def new_project
       zipfile = archiver.zip
       payload = {
           files: [Faraday::UploadIO.new(zipfile.path, 'application/octet-stream')]
       }
-      api.post('code.json', payload)
+
+      handle_response(api.post('code.json', payload)) do |json_response|
+        JScrambler::Project.new(json_response, self)
+      end
     end
 
-    private
+    def projects(options={})
+      handle_response(api.get('code.json', options)) do |response|
+        response.map { |project_hash| JScrambler::Project.new(project_hash, self) }
+      end
+    end
 
-    def archiver
-      @archiver = JScrambler::Archiver.new(config['filesSrc'].to_a)
+    def handle_response(response)
+      if response.status == 200
+        yield(response.body) if block_given?
+      else
+        raise JScrambler::ApiError, "Error: #{response.body['message']}"
+      end
     end
 
     def api
@@ -35,6 +46,12 @@ module JScrambler
         builder.response  :json
         builder.adapter   Faraday.default_adapter
       end
+    end
+
+    private
+
+    def archiver
+      @archiver = JScrambler::Archiver.new(config['filesSrc'].to_a)
     end
 
     def url

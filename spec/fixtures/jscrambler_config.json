@@ -1,5 +1,5 @@
 {
-  "filesSrc": [""],
+  "filesSrc": ["spec/fixtures/samples/index.html", "spec/fixtures/samples/hello.js"],
   "filesDest": "dist/",
   "host": "api.jscrambler.com",
   "port": 443,
