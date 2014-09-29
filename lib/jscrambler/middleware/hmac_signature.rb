@@ -7,7 +7,6 @@ module JScrambler
       end
 
       def call(env)
-        require 'byebug'; byebug
         env.body[:signature] = hmac_params_signature(env)
         @app.call(env)
       end
