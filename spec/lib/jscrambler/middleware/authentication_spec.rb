@@ -24,7 +24,7 @@ describe JScrambler::Middleware::Authentication do
 
   context 'when dealing with get requests' do
     let(:payload) { { :access_key => '1234', timestamp: '2014-09-28T18:05:24Z' } }
-    let(:env) { double('env', method: :get, body: payload, url: '/code.json') }
+    let(:env) { double('env', method: :get, body: payload, url: '/code.json', 'url=' => nil, 'body=' => nil) }
 
     it 'should sign request with a hmac signature' do
       subject.call(env)
@@ -66,7 +66,7 @@ describe JScrambler::Middleware::Authentication do
 
   context 'when dealing with delete requests' do
     let(:payload) { { :access_key => '1234', timestamp: '2014-09-28T18:05:24Z' } }
-    let(:env) { double('env', method: :delete, body: payload, url: '/code.json') }
+    let(:env) { double('env', method: :delete, body: payload, url: '/code.json', 'url=' => nil, 'body=' => nil) }
 
     it 'should sign request with a hmac signature' do
       subject.call(env)
