@@ -32,6 +32,7 @@ module JScrambler
         builder.request   :multipart
         builder.request   :url_encoded
         builder.response  :logger
+        builder.response  :json
         builder.adapter   Faraday.default_adapter
       end
     end
