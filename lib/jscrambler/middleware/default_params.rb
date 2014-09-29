@@ -8,6 +8,7 @@ module JScrambler
 
       def call(env)
         file_index = 0
+        env.body ||= {}
         env.body.delete(:files).to_a.each do |file|
           env.body["file_#{file_index}".to_sym] = file
           file_index += 1
