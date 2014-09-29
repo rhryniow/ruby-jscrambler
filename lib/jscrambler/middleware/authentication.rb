@@ -7,6 +7,11 @@ module JScrambler
       end
 
       def call(env)
+        env.body[:signature] = hmac_params_signature(env)
+        if [:get, :delete].include? env.method
+          env.url += "?#{URI.encode_www_form(env.body)}"
+          env.body = nil
+        end
         puts "URL = #{env.url}"
         puts "Request body = #{env.body}"
         @app.call(env)
