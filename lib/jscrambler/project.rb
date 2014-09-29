@@ -25,5 +25,19 @@ module JScrambler
         json_response['finished_at'] ? :finished : :processing
       end
     end
+
+    def download
+      if status == :finished
+        client.handle_response(client.api.get("code/#{id}.zip")) do |response|
+          temp = Tempfile.new(%w(jscrambler .zip))
+          temp.write(response)
+          temp.close
+          JScrambler::Archiver.new(temp).unzip(client.config['filesDest'])
+        end
+        true
+      else
+        false
+      end
+    end
   end
 end

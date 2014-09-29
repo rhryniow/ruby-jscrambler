@@ -1,6 +1,6 @@
 {
   "filesSrc": ["spec/fixtures/samples/index.html", "spec/fixtures/samples/hello.js"],
-  "filesDest": "dist/",
+  "filesDest": "/tmp",
   "host": "api.jscrambler.com",
   "port": 443,
   "apiVersion": 3,
