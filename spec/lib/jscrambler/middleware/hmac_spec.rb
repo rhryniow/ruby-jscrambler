@@ -2,8 +2,7 @@ require 'spec_helper'
 
 describe JScrambler::Middleware::HmacSignature do
 
-  let(:file1) { Tempfile.new(%w(file1 .jpg)) }
-  let(:file2) { Tempfile.new(%w(file2 .jpg)) }
+  let(:file_0) { Tempfile.new(%w(file1 .zip)) }
   let(:app) { double('app', call: nil) }
 
   before do
@@ -27,41 +26,41 @@ describe JScrambler::Middleware::HmacSignature do
     let(:payload) { { :access_key => '1234', timestamp: '2014-09-28T18:05:24Z' } }
     let(:env) { double('env', method: :get, body: payload, url: '/code.json') }
 
-    xit 'should sign request with a hmac signature' do
+    it 'should sign request with a hmac signature' do
       subject.call(env)
-      expect(env.body[:signature]).to eq 'ur8xL6Dg+ReT4g4SA+Tz/WViOej4hfCRZZb0CWMblIc='
+      expect(env.body[:signature]).to eq '66LvBFIvTRI2TzNcH4mh0MqFtHxNx2mEFoGe2n6TK3Q='
     end
   end
 
   context 'when dealing with post requests' do
     let(:payload) {
       {
-          files: [Faraday::UploadIO.new(file1.path, 'image/jpeg'), Faraday::UploadIO.new(file2.path, 'image/jpeg')],
+          file_0: Faraday::UploadIO.new(file_0.path, 'application/octet-stream'),
           access_key: '1234',
           timestamp: '2014-09-28T18:05:24Z'
       }
     }
     let(:env) { double('env', method: :post, body: payload, url: '/code.json') }
 
-    xit 'should sign request with a hmac signature' do
+    it 'should sign request with a hmac signature' do
       subject.call(env)
-      expect(env.body[:signature]).to eq 'hqTZHnzMD7Z8nxrEqpWRzzIXVi4qkFcXjEmuolyZN6g='
+      expect(env.body[:signature]).to eq 'butCKe/+70LO7m/SXY5OncAaGtTQ3iTZfqR7FHBM5aE='
     end
   end
 
   context 'when dealing with put requests' do
     let(:payload) {
       {
-          files: [Faraday::UploadIO.new(file1.path, 'image/jpeg'), Faraday::UploadIO.new(file2.path, 'image/jpeg')],
+          file_0: Faraday::UploadIO.new(file_0.path, 'application/octet-stream'),
           access_key: '1234',
           timestamp: '2014-09-28T18:05:24Z'
       }
     }
     let(:env) { double('env', method: :put, body: payload, url: '/code.json') }
 
-    xit 'should sign request with a hmac signature' do
+    it 'should sign request with a hmac signature' do
       subject.call(env)
-      expect(env.body[:signature]).to eq 'vfDnATXVoRQOXiFNkozxgWyc8nI5ZOqKd5Zo8b1taOA='
+      expect(env.body[:signature]).to eq 'ugIIfT5l9s9cgdg5PeMgbqQqL+VnMVGqDLYAjWRGA2M='
     end
   end
 
@@ -69,9 +68,9 @@ describe JScrambler::Middleware::HmacSignature do
     let(:payload) { { :access_key => '1234', timestamp: '2014-09-28T18:05:24Z' } }
     let(:env) { double('env', method: :delete, body: payload, url: '/code.json') }
 
-    xit 'should sign request with a hmac signature' do
+    it 'should sign request with a hmac signature' do
       subject.call(env)
-      expect(env.body[:signature]).to eq 'p0WpdoL52F70tCOHliiovGmENZ3Uw0bLaXR6bh3nyU4='
+      expect(env.body[:signature]).to eq '8fyRNV0inEI8nYysOYB5TyeneIbRTbMyMv/94FrFwPA='
     end
   end
 end

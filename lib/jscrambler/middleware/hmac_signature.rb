@@ -33,12 +33,7 @@ module JScrambler
         params_copy = env.body.clone
         params_copy = add_file_params(params_copy) if [:post, :put].include? env.method
         params_copy = sort_parameters(params_copy)
-
-        if [:get, :delete].include? env.method
-          URI.encode_www_form(params_copy)
-        else
-          URI.encode(params_copy.map{|k,v| "#{k}=#{v}"}.join('&'))
-        end
+        URI.encode_www_form(params_copy)
       end
 
       def sort_parameters(params)
@@ -46,11 +41,9 @@ module JScrambler
       end
 
       def add_file_params(params)
-        if params[:files].kind_of? Array
-          file_index = 0
-          params.delete(:files).each do |file|
-            params["file_#{file_index}".to_sym] = OpenSSL::Digest::MD5.hexdigest(File.read(file.local_path))
-            file_index += 1
+        params.each do |key, value|
+          if key.to_s.start_with? 'file_'
+            params[key] = OpenSSL::Digest::MD5.hexdigest(File.read(value.local_path))
           end
         end
         params
