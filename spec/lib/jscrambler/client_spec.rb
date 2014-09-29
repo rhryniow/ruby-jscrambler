@@ -53,7 +53,6 @@ describe JScrambler::Client do
         builder.use       JScrambler::Middleware::Authentication
         builder.request   :multipart
         builder.request   :url_encoded
-        builder.response  :json
         builder.adapter   :test, @stubbed_api
       end
       allow(client).to receive(:api).and_return(api)
@@ -77,7 +76,6 @@ describe JScrambler::Client do
           builder.use       JScrambler::Middleware::Authentication
           builder.request   :multipart
           builder.request   :url_encoded
-          builder.response  :json
           builder.adapter   :test, @stubbed_api
         end
         allow(client).to receive(:api).and_return(api)
@@ -103,7 +101,6 @@ describe JScrambler::Client do
         builder.use       JScrambler::Middleware::Authentication
         builder.request   :multipart
         builder.request   :url_encoded
-        builder.response  :json
         builder.adapter   :test, @stubbed_api
       end
       allow(client).to receive(:api).and_return(api)
@@ -127,7 +124,6 @@ describe JScrambler::Client do
           builder.use       JScrambler::Middleware::Authentication
           builder.request   :multipart
           builder.request   :url_encoded
-          builder.response  :json
           builder.adapter   :test, @stubbed_api
         end
         allow(client).to receive(:api).and_return(api)

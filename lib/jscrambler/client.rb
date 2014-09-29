@@ -12,7 +12,7 @@ module JScrambler
     end
 
     def new_project
-      zipfile = archiver.zip
+      zipfile = archiver.zip(config['filesSrc'].to_a)
       payload = {
           files: [Faraday::UploadIO.new(zipfile.path, 'application/octet-stream')]
       }
@@ -29,10 +29,16 @@ module JScrambler
     end
 
     def handle_response(response)
+      begin
+        body_hash = JSON.parse(response.body)
+      rescue JSON::ParserError
+        body_hash = response.body
+      end
+
       if response.status == 200
-        yield(response.body) if block_given?
+        yield(body_hash) if block_given?
       else
-        raise JScrambler::ApiError, "Error: #{response.body['message']}"
+        raise JScrambler::ApiError, "Error: #{body_hash['message']}"
       end
     end
 
@@ -43,7 +49,6 @@ module JScrambler
         builder.request   :multipart
         builder.request   :url_encoded
         builder.response  :logger
-        builder.response  :json
         builder.adapter   Faraday.default_adapter
       end
     end
@@ -51,7 +56,7 @@ module JScrambler
     private
 
     def archiver
-      @archiver = JScrambler::Archiver.new(config['filesSrc'].to_a)
+      @archiver = JScrambler::Archiver.new
     end
 
     def url

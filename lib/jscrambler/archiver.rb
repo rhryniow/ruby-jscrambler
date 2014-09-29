@@ -1,14 +1,13 @@
 module JScrambler
   class Archiver
 
-    attr_accessor :files
     attr_accessor :zipfile
 
-    def initialize(files, zipfile=Tempfile.new(%w(jscrambler .zip)))
-      @files, @zipfile = files, zipfile
+    def initialize(zipfile=Tempfile.new(%w(jscrambler .zip)))
+      @zipfile = zipfile
     end
 
-    def zip
+    def zip(files)
       Zip::File.open(zipfile.path, Zip::File::CREATE) do |zipfile|
         files.each do |file|
           filename = File.basename(file)

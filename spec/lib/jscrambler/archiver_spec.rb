@@ -3,7 +3,7 @@ require 'spec_helper'
 describe JScrambler::Archiver do
 
   let(:files) { [Tempfile.new('file1'), Tempfile.new('file2')] }
-  let(:instance) { described_class.new(files.map(&:path)) }
+  let(:instance) { described_class.new }
 
   describe '#initialize' do
 
@@ -16,7 +16,7 @@ describe JScrambler::Archiver do
 
   describe '#zip' do
 
-    subject { instance.zip }
+    subject { instance.zip(files.map(&:path)) }
 
     it 'should generate a zipfile' do
       expect(File.exists?(subject)).to be true
@@ -28,7 +28,7 @@ describe JScrambler::Archiver do
     let(:to_path) { Dir.mktmpdir }
 
     before do
-      instance.zip
+      instance.zip(files.map(&:path))
     end
 
     subject { instance.unzip(to_path) }
