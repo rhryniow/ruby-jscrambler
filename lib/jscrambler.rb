@@ -10,7 +10,7 @@ require 'jscrambler/client'
 require 'jscrambler/errors'
 require 'jscrambler/archiver'
 require 'jscrambler/middleware/default_params'
-require 'jscrambler/middleware/hmac_signature'
+require 'jscrambler/middleware/authentication'
 
 module JScrambler
 

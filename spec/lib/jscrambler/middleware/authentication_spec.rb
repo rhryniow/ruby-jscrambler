@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe JScrambler::Middleware::HmacSignature do
+describe JScrambler::Middleware::Authentication do
 
   let(:file_0) { Tempfile.new(%w(file1 .zip)) }
   let(:app) { double('app', call: nil) }
