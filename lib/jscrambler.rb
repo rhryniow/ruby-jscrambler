@@ -15,15 +15,16 @@ require 'jscrambler/project/file'
 require 'jscrambler/middleware/default_params'
 require 'jscrambler/middleware/authentication'
 
-
-
 module JScrambler
 
   LOGGER = Logger.new(STDOUT)
+  LOGGER.level = defined?(Rails) ? Rails.logger.level : Logger::DEBUG
+
   POLLING_MAX_RETRIES = 60
   POLLING_FREQUENCY = 1
 
   class << self
+
     def upload_code(json_config=nil)
       JScrambler::Client.new(json_config).new_project
     end

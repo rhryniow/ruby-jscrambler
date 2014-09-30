@@ -11,7 +11,7 @@ RSpec.configure do |config|
   config.order      = 'random'
 
   config.before(:each) do
-    stub_const('JScrambler::Config::DEFAULT_CONFIG_FILE', 'spec/fixtures/jscrambler_config.json')
+    stub_const('JScrambler::Config::DEFAULT_CONFIG_FILE', 'spec/fixtures/jscrambler_default_config.json')
 
     logger = Logger.new(STDOUT)
     logger.level = Logger::INFO
