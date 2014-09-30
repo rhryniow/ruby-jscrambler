@@ -15,7 +15,7 @@ module JScrambler
       zipfile = archiver.zip(config['filesSrc'].to_a)
       payload = {
           files: [Faraday::UploadIO.new(zipfile.path, 'application/octet-stream')]
-      }
+      }.merge(config['params'])
 
       LOGGER.info "Uploading #{payload[:files].count} file(s) to JScrambler"
       handle_response(api.post('code.json', payload)) do |json_response|

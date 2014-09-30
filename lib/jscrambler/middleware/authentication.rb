@@ -43,7 +43,7 @@ module JScrambler
       end
 
       def sort_parameters(params)
-        Hash[params.sort_by{|key, _| key}]
+        Hash[params.sort_by{|key, _| key.to_s}]
       end
 
       def add_file_params(params)
