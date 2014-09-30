@@ -35,6 +35,8 @@ module JScrambler
         body_hash = response.body
       end
 
+      LOGGER.debug response.body
+
       if response.status == 200
         yield(body_hash) if block_given?
       else

@@ -54,7 +54,7 @@ module JScrambler
     end
 
     def get_info(requested_project, json_config=nil)
-
+      self.find_project(requested_project, json_config)
     end
 
     def process(json_config=nil)
@@ -79,7 +79,11 @@ module JScrambler
       if project.nil?
         raise JScrambler::ProjectNotFound, "Could not find project #{requested_project}"
       else
-        yield(project) if block_given?
+        if block_given?
+          yield(project)
+        else
+          project
+        end
       end
     end
   end

@@ -17,7 +17,14 @@ module JScrambler
     end
 
     def files
-      @files ||= @sources.to_a.map { |file_hash| JScrambler::Project::File.new(file_hash, client) }
+      @files ||= begin
+        if @sources.nil?
+          @sources = client.handle_response(client.api.get("code/#{id}.json")) do |json_response|
+            json_response['sources']
+          end
+        end
+        @sources.to_a.map { |file_hash| JScrambler::Project::File.new(file_hash.merge('project_id' => id), client) }
+      end
     end
 
     def status
