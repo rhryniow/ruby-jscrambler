@@ -38,6 +38,7 @@ module JScrambler
     def download
       if status == :finished
         client.handle_response(client.api.get("code/#{id}.zip")) do |response|
+          LOGGER.info "Downloading source files for #{id}..."
           temp = Tempfile.new(%w(jscrambler .zip))
           temp.write(response)
           temp.close
@@ -53,7 +54,7 @@ module JScrambler
     def delete
       client.handle_response(client.api.delete("code/#{id}.zip")) do |json_response|
         is_deleted = json_response['deleted']
-        LOGGER.debug "Deleted project #{id}" if is_deleted
+        LOGGER.info "Deleted project #{id}" if is_deleted
         is_deleted
       end
     end

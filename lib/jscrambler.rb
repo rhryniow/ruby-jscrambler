@@ -18,7 +18,7 @@ require 'jscrambler/middleware/authentication'
 module JScrambler
 
   LOGGER = Logger.new(STDOUT)
-  LOGGER.level = defined?(Rails) ? Rails.logger.level : Logger::DEBUG
+  LOGGER.level = defined?(Rails) ? Rails.logger.level : Logger::INFO
 
   POLLING_MAX_RETRIES = 60
   POLLING_FREQUENCY = 1
@@ -31,7 +31,7 @@ module JScrambler
 
     def poll_project(requested_project, json_config=nil)
       self.find_project(requested_project, json_config) do |project|
-        LOGGER.debug "Polling project #{project.id}"
+        LOGGER.info "Waiting for project #{project.id} to finish processing..."
 
         retries = 0
 
@@ -44,6 +44,7 @@ module JScrambler
           retries += 1
         end
 
+        LOGGER.info "Project #{project.id} is ready!"
         true
       end
     end
@@ -62,6 +63,7 @@ module JScrambler
       project = self.upload_code(json_config)
       self.poll_project(project)
       project.download
+      LOGGER.info "Finished processing #{project.id}!"
     end
 
     def projects(json_config=nil)

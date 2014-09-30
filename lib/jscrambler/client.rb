@@ -17,6 +17,7 @@ module JScrambler
           files: [Faraday::UploadIO.new(zipfile.path, 'application/octet-stream')]
       }
 
+      LOGGER.info "Uploading #{payload[:files].count} file(s) to JScrambler"
       handle_response(api.post('code.json', payload)) do |json_response|
         JScrambler::Project.new(json_response, self)
       end

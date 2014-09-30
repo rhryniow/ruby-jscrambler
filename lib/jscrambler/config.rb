@@ -11,9 +11,9 @@ module JScrambler
           raise JScrambler::MissingKeys, 'Missing Access Key or Secret Key'
         end
       rescue JSON::ParserError
-        @config = JSON.parse(File.open(DEFAULT_CONFIG_FILE, 'rb').read)
-      rescue Errno::ENOENT
-        raise JScrambler::ConfigError, "Could not find config file in #{config_file_path}"
+        raise JScrambler::ConfigError, "Could not process config file #{config_file_path}"
+      rescue Errno::ENOENT, Errno::EISDIR
+        raise JScrambler::ConfigError, "Could not find config file #{config_file_path}"
       end
     end
 
