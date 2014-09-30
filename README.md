@@ -1,4 +1,5 @@
-ruby-jscrambler
-===============
+### JScrambler client for Ruby.
 
-JScrambler Client for Ruby
+[![Build Status](https://travis-ci.org/joseairosa/ruby-jscrambler.svg?branch=alpha)](https://travis-ci.org/joseairosa/ruby-jscrambler)
+
+Soon...
