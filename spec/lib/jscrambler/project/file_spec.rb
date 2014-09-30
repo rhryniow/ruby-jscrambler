@@ -27,6 +27,20 @@ describe JScrambler::Project::File do
     allow(JScrambler::Client).to receive(:new).and_return(client)
   end
 
+  describe '#initialize' do
+
+    subject {described_class.new(options)}
+
+    context 'when no ID is provided' do
+
+      let(:options) { {} }
+
+      it 'should raise an error' do
+        expect{subject}.to raise_error ArgumentError
+      end
+    end
+  end
+
   describe '#download' do
 
     before do
