@@ -12,5 +12,9 @@ RSpec.configure do |config|
 
   config.before(:each) do
     stub_const('JScrambler::Config::DEFAULT_CONFIG_FILE', 'spec/fixtures/jscrambler_config.json')
+
+    logger = Logger.new(STDOUT)
+    logger.level = Logger::INFO
+    stub_const('JScrambler::LOGGER', logger)
   end
 end

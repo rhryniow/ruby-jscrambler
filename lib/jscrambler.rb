@@ -15,28 +15,72 @@ require 'jscrambler/project/file'
 require 'jscrambler/middleware/default_params'
 require 'jscrambler/middleware/authentication'
 
+
+
 module JScrambler
 
   LOGGER = Logger.new(STDOUT)
+  POLLING_MAX_RETRIES = 60
+  POLLING_FREQUENCY = 1
+
   class << self
     def upload_code(json_config=nil)
       JScrambler::Client.new(json_config).new_project
     end
 
-    def poll_project(json_config=nil)
+    def poll_project(requested_project, json_config=nil)
+      self.find_project(requested_project, json_config) do |project|
+        LOGGER.debug "Polling project #{project.id}"
+
+        retries = 0
+
+        status = project.status
+        while status != :finished
+          sleep POLLING_FREQUENCY
+          status = project.status
+          break if status == :finished
+          raise JScrambler::ApiError, 'Retries timeout exceeded while polling project' if retries >= POLLING_MAX_RETRIES
+          retries += 1
+        end
+
+        true
+      end
+    end
+
+    def download_code(requested_project, json_config=nil)
+      self.find_project(requested_project, json_config) do |project|
+        project.download
+      end
+    end
+
+    def get_info(requested_project, json_config=nil)
 
     end
 
-    def download_code(json_config=nil)
-
-    end
-
-    def get_info(json_config=nil)
-
+    def process(json_config=nil)
+      project = self.upload_code(json_config)
+      self.poll_project(project)
+      project.download
     end
 
     def projects(json_config=nil)
       JScrambler::Client.new(json_config).projects
+    end
+
+    def find_project(requested_project, json_config)
+      project = if requested_project.kind_of? JScrambler::Project
+                  requested_project
+                else
+                  JScrambler::Client.new(json_config).projects.find { |tmp_project|
+                    tmp_project.id == requested_project
+                  }
+                end
+
+      if project.nil?
+        raise JScrambler::ProjectNotFound, "Could not find project #{requested_project}"
+      else
+        yield(project) if block_given?
+      end
     end
   end
 end

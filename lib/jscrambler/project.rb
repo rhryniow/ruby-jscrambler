@@ -22,7 +22,9 @@ module JScrambler
 
     def status
       client.handle_response(client.api.get("code/#{id}.json")) do |json_response|
-        json_response['finished_at'] ? :finished : :processing
+        status = json_response['finished_at'] ? :finished : :processing
+        LOGGER.debug "Status for project #{id}: #{status}"
+        status
       end
     end
 
@@ -34,9 +36,18 @@ module JScrambler
           temp.close
           JScrambler::Archiver.new(temp).unzip(client.config['filesDest'])
         end
+        delete if client.config['deleteProject']
         true
       else
         false
+      end
+    end
+
+    def delete
+      client.handle_response(client.api.delete("code/#{id}.zip")) do |json_response|
+        is_deleted = json_response['deleted']
+        LOGGER.debug "Deleted project #{id}" if is_deleted
+        is_deleted
       end
     end
   end
