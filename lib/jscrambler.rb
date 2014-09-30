@@ -1,3 +1,4 @@
+require 'logger'
 require 'json'
 require 'zip'
 require 'openssl'
@@ -16,6 +17,7 @@ require 'jscrambler/middleware/authentication'
 
 module JScrambler
 
+  LOGGER = Logger.new(STDOUT)
   class << self
     def upload_code(json_config=nil)
       JScrambler::Client.new(json_config).new_project
