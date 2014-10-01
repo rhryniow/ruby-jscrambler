@@ -18,7 +18,12 @@ require 'jscrambler/middleware/authentication'
 module JScrambler
 
   LOGGER = Logger.new(STDOUT)
-  LOGGER.level = defined?(Rails) ? Rails.logger.level : Logger::INFO
+  LOGGER.level = Logger::INFO
+
+  if defined?(Rails)
+    require 'jscrambler/engine'
+    require 'jscrambler/railtie'
+  end
 
   POLLING_MAX_RETRIES = 60
   POLLING_FREQUENCY = 1
