@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    jscrambler (1.0.0.pre.alpha)
+    jscrambler (1.0.1.pre.alpha)
       faraday
       faraday_middleware
       json
