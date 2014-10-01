@@ -21,6 +21,15 @@ describe JScrambler::Archiver do
     it 'should generate a zipfile' do
       expect(File.exists?(subject)).to be true
     end
+
+    context 'when dealing with globs' do
+
+      subject { instance.zip(['spec/fixtures/samples/*']) }
+
+      it 'should generate a zipfile' do
+        expect(File.exists?(subject)).to be true
+      end
+    end
   end
 
   describe '#unzip' do
@@ -33,7 +42,7 @@ describe JScrambler::Archiver do
 
     subject { instance.unzip(to_path) }
 
-    it 'should generate a zipfile' do
+    it 'should extract a zipfile' do
       subject.each do |file|
         expect(File.exists?(File.join(to_path, File.basename(file)))).to be true
       end
