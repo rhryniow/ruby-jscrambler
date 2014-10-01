@@ -40,7 +40,7 @@ module JScrambler
         client.handle_response(client.api.get("code/#{id}.zip")) do |response|
           LOGGER.info "Downloading source files for #{id}..."
           temp = Tempfile.new(%w(jscrambler .zip))
-          temp.write(response)
+          temp.write(response.force_encoding('UTF-8'))
           temp.close
           JScrambler::Archiver.new(temp).unzip(client.config['filesDest'])
         end
