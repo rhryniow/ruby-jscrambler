@@ -7,11 +7,12 @@ module JScrambler
       @zipfile = zipfile
     end
 
-    def zip(files)
+    def zip(paths)
       Zip::File.open(zipfile.path, Zip::File::CREATE) do |zipfile|
-        files.each do |file|
-          filename = File.basename(file)
-          zipfile.add(filename, file)
+        paths.each do |path|
+          Dir.glob(path).each do |file_path|
+            zipfile.add(File.basename(file_path), file_path)
+          end
         end
       end
       zipfile
