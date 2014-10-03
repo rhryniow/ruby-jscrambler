@@ -1,10 +1,10 @@
 # JScrambler client for Ruby.
 
-[![Build Status](https://travis-ci.org/joseairosa/ruby-jscrambler.svg)](https://travis-ci.org/joseairosa/ruby-jscrambler)
-
 **JScrambler** is an online JavaScript obfuscator and code optimization tool available as a Web application and Web API.
 
 For more information vist [https://jscrambler.com/en](https://jscrambler.com/en)
+
+[![Build Status](https://travis-ci.org/joseairosa/ruby-jscrambler.svg)](https://travis-ci.org/joseairosa/ruby-jscrambler)
 
 # Getting started
 
