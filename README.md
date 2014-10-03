@@ -55,29 +55,29 @@ Once you have them replace `REPLACE_WITH_ACCESS_KEY` with your access key and `R
 
 2. Change where to pick up your html and js file from by replacing the `["REPLACE_WITH_SOURCE_FILES_PATH"]` array. Some examples:
 
-##### One file
+  ##### One file
 
         "filesSrc": ["/some/path/script.js"],
 
-##### Multiple file
+  ##### Multiple file
 
         "filesSrc": ["/some/path/script.js", "/some/path/jquery.js", "/some/path/index.html"],
 
-##### All files in a given folder
+  ##### All files in a given folder
 
         "filesSrc": ["/some/path/scripts/*"],
 
-##### All files in a given folder and all its subfolders
+  ##### All files in a given folder and all its subfolders
 
         "filesSrc": ["/some/path/scripts/**"],
 
-##### Combination of examples above
+  ##### Combination of examples above
 
         "filesSrc": ["/some/path/scripts/**", "/some/path/html_files/*", "/some/path/vendor/jquery.js"],
 
 3. Change where to store your obfuscated files after being processed by JScrambler by replacing `REPLACE_WITH_DESTINATION_PATH`. Example:
 
-        "filesDest": ["/some/path/processed_files"], 
+          "filesDest": ["/some/path/processed_files"], 
 
 # How to process files
 
