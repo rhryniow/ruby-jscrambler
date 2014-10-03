@@ -81,7 +81,23 @@ Once you have them replace `REPLACE_WITH_ACCESS_KEY` with your access key and `R
 
 # How to process files
 
-This gem comes packed with a [rake](https://github.com/jimweirich/rake) task that you can run to process your files.
+There are 2 ways to process your files using this gem:
+
+1. This gem comes packed with a [rake](https://github.com/jimweirich/rake) task that you can run to process your files.
+2. Using gem's internal API.
+
+### Rake
+
+In order to process files using this method, first of all open your `Rakefile` and add the following:
+
+```ruby
+spec = Gem::Specification.find_by_name 'jscrambler'
+load "#{spec.gem_dir}/lib/tasks/jscrambler.rake"
+```
+
+This will make sure that when you run `bundle exec rake` it know where to search for JScrambler tasks.
+
+Once this is done simply run:
 
         bundle exec rake jscrambler:process
 
@@ -90,6 +106,37 @@ It will read your config file, take all the files specified in your `filesSrc` p
 Alternatively you can provide a custom config file:
 
         bundle exec rake jscrambler:process['/some/path/to/config.json']
+        
+### Gem API
+
+If you're a developer and want to integrate JScrambler functionalities directly into your ruby code, this will be your method of choice.
+
+```ruby
+require 'jscrambler'
+
+# Will simply update your source code in filesSrc to JScrambler and create a new JScrambler::Project
+JScrambler.upload_code
+
+# Will wait until a given project has been processed. 
+# `requested_project` - can either be a project ID hash or a JScrambler::Project
+JScrambler.poll_project(requested_project)
+
+# Will download processed source code for a given project.
+# `requested_project` - can either be a project ID hash or a JScrambler::Project
+JScrambler.download_code(requested_project)
+
+# Will retrieve a JScrambler::Project object for a given project
+# `requested_project` - can either be a project ID hash or a JScrambler::Project
+JScrambler.get_info(requested_project)
+
+# Takes `upload_code`, `poll_project` and `download_code` and runs them one of the other.
+JScrambler.process
+
+# Retrieves all projects
+JScrambler.projects
+```
+
+# Specific framework integrations
 
 ### Rails
 
