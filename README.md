@@ -40,7 +40,7 @@ For more information vist [https://jscrambler.com/en](https://jscrambler.com/en)
     "whitespace": "%DEFAULT%",
     "literal_duplicates": "%DEFAULT%"
   },
-  "deleteProject": false
+  "deleteProject": true
 }
 ```
 
@@ -93,12 +93,12 @@ Alternatively you can provide a custom config file:
 
 ### Rails
 
-This gem integrates directly with Rails. Here's how your config file could look (just an example):
+This gem integrates directly with Rails. Here's how your config file should look like:
 
 ```json
 {
-  "filesSrc": ["/path/to/javascripst/**"],
-  "filesDest": "/rails/root/app/assets/javascripts/",
+  "filesSrc": ["public/assets/*.js"],
+  "filesDest": "public/assets/",
   "host": "api.jscrambler.com",
   "port": 443,
   "apiVersion": 3,
@@ -116,13 +116,11 @@ This gem integrates directly with Rails. Here's how your config file could look 
     "whitespace": "%DEFAULT%",
     "literal_duplicates": "%DEFAULT%"
   },
-  "deleteProject": false
+  "deleteProject": true
 }
 ```
 
-To avoid clashing we recommend copying the files you want to process to a separate folder and pointing the `filesSrc` to that folder.
-
-Normally you'll want to run this before running `rake assets:precompile`.
+Make sure that you first run `rake assets:precompile` task. This will run the obfuscation on top of the already generated and unified javascript files in your `public/assets` folder. For more information on Rails assets pipeline [read here](http://guides.rubyonrails.org/asset_pipeline.html).
 
 ## License
 
