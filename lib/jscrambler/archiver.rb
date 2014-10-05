@@ -1,3 +1,5 @@
+require 'abbrev'
+
 module JScrambler
   class Archiver
 
@@ -8,10 +10,16 @@ module JScrambler
     end
 
     def zip(paths)
-      Zip::File.open(zipfile.path, Zip::File::CREATE) do |zipfile|
+
+      File.delete(zipfile.path) if File.exists?(zipfile.path)
+
+      Zip::File.open(zipfile.path, Zip::File::CREATE) do |zip_handler|
         paths.each do |path|
-          Dir.glob(path).each do |file_path|
-            zipfile.add(File.basename(file_path), file_path)
+          expanded_glob = Dir.glob(path)
+          common_path = common_path(expanded_glob + [path])
+          expanded_glob.each do |file_path|
+            internal_file_path = file_path.gsub(File.join(common_path, ''), '')
+            zip_handler.add(internal_file_path, file_path)
           end
         end
       end
@@ -33,6 +41,13 @@ module JScrambler
         end
       end
       files
+    end
+
+    private
+
+    def common_path(dirs)
+      common_prefix = dirs.abbrev.keys.min_by {|key| key.length}.chop
+      common_prefix.sub(%r{/[^/]*$}, '')
     end
   end
 end
