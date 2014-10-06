@@ -129,7 +129,7 @@ JScrambler.download_code(requested_project)
 # `requested_project` - can either be a project ID hash or a JScrambler::Project
 JScrambler.get_info(requested_project)
 
-# Takes `upload_code`, `poll_project` and `download_code` and runs them one of the other.
+# Takes `upload_code`, `poll_project` and `download_code` and runs them one after the other.
 JScrambler.process
 
 # Retrieves all projects
