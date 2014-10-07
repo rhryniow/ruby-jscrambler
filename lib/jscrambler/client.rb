@@ -46,7 +46,7 @@ module JScrambler
     end
 
     def api
-      @api ||= Faraday.new(:url => url) do |builder|
+      @api ||= Faraday.new(url: url, ssl: {verify: false}) do |builder|
         builder.use       JScrambler::Middleware::DefaultParams
         builder.use       JScrambler::Middleware::Authentication
         builder.request   :multipart
