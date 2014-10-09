@@ -4,8 +4,14 @@ describe JScrambler::Middleware::Authentication do
 
   let(:file_0) { Tempfile.new(%w(file1 .zip)) }
   let(:app) { double('app', call: nil) }
+  let(:payload) { { :access_key => '1234', timestamp: '2014-09-28T18:05:24Z', some_param: false } }
+  let(:env) { double('env', method: :get, body: payload, url: '/code.json', 'url=' => nil, 'body=' => nil) }
 
   subject { described_class.new(app) }
+
+  it 'should remove parameters with false value' do
+    expect(subject.send(:generate_query_string, env)).to eq 'access_key=1234&timestamp=2014-09-28T18%3A05%3A24Z'
+  end
 
   context 'when dealing with get requests' do
     let(:payload) { { :access_key => '1234', timestamp: '2014-09-28T18:05:24Z' } }

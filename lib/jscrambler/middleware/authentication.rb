@@ -36,6 +36,7 @@ module JScrambler
         params_copy = env.body.clone
         params_copy = add_file_params(params_copy) if [:post, :put].include? env.method
         params_copy = sort_parameters(params_copy)
+        params_copy.reject! { |_, v| !v }
         URI.encode_www_form(params_copy)
       end
 
