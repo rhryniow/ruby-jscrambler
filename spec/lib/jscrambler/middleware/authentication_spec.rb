@@ -5,21 +5,6 @@ describe JScrambler::Middleware::Authentication do
   let(:file_0) { Tempfile.new(%w(file1 .zip)) }
   let(:app) { double('app', call: nil) }
 
-  before do
-    # @api = Faraday.new do |builder|
-    #   builder.use     JScrambler::Middleware::Timestamp
-    #   builder.use     JScrambler::Middleware::HmacSignature
-    #   builder.request :multipart
-    #   builder.request :url_encoded
-    #   builder.adapter :test, Faraday::Adapter::Test::Stubs.new do |stub|
-    #     stub.get('/code.json') { |env| [ 200, {}, 'sup?!' ]}
-    #     stub.delete('/code.json') { |env| [ 200, {}, 'sup?!' ]}
-    #     stub.put('/code.json') { |env| [ 200, {}, 'sup?!' ]}
-    #     stub.post('/code.json') { |env| [ 200, {}, 'sup?!' ]}
-    #   end
-    # end
-  end
-
   subject { described_class.new(app) }
 
   context 'when dealing with get requests' do
