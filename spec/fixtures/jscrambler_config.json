@@ -1,0 +1,22 @@
+{
+  "filesSrc": ["spec/fixtures/samples/index.html", "spec/fixtures/samples/hello.js"],
+  "filesDest": "/tmp",
+  "host": "api.jscrambler.com",
+  "port": 443,
+  "apiVersion": 3,
+  "keys": {
+    "accessKey": "ACCESS_KEY",
+    "secretKey": "SECRET_KEY"
+  },
+  "params": {
+    "string_splitting": "%DEFAULT%",
+    "function_reorder": "%DEFAULT%",
+    "function_outlining": "%DEFAULT%",
+    "dot_notation_elimination": "%DEFAULT%",
+    "expiration_date": "2199-01-01",
+    "rename_local": "%DEFAULT%",
+    "whitespace": "%DEFAULT%",
+    "literal_duplicates": "%DEFAULT%"
+  },
+  "deleteProject": false
+}
