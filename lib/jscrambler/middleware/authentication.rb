@@ -12,8 +12,6 @@ module JScrambler
           env.url += "?#{URI.encode_www_form(env.body)}"
           env.body = nil
         end
-        # puts "URL = #{env.url}"
-        # puts "Request body = #{env.body}"
         @app.call(env)
       end
 
@@ -22,7 +20,6 @@ module JScrambler
       def hmac_params_signature(env)
         key = @config['keys']['secretKey'].to_s.upcase
         data = generate_data(env)
-        # puts "Data = #{data}"
         Base64.encode64(OpenSSL::HMAC.digest(OpenSSL::Digest.new('sha256'), key, data)).strip
       end
 
@@ -39,6 +36,7 @@ module JScrambler
         params_copy = env.body.clone
         params_copy = add_file_params(params_copy) if [:post, :put].include? env.method
         params_copy = sort_parameters(params_copy)
+        params_copy.reject! { |_, v| !v }
         URI.encode_www_form(params_copy)
       end
 
