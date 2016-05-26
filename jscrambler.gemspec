@@ -21,7 +21,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'faraday', '~> 0.9'
   s.add_runtime_dependency 'faraday_middleware', '~> 0.9'
   s.add_runtime_dependency 'rake', '~> 10.3'
-  s.add_runtime_dependency 'rspec', '~> 3.1'
+  s.add_runtime_dependency 'rspec', '>= 3.1'
   s.add_runtime_dependency 'rubyzip', '~> 1.1'
 
   s.add_development_dependency 'pry-byebug', '~> 2.0'
